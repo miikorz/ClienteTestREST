@@ -53,7 +53,7 @@ public class ClienteTest {
         nuevaCategoria.setNombre("Nuevisima categoría");
 
         System.out.println("Insertando una nueva categoria en el sistema");
-        Categoria p2 = addCategoria("http://localhost:8080/ProyectoFinal20162017-web/webservice/CategoriaService/Categorias/add", nuevaCategoria);
+        Categoria p2 = addCategoria("http://localhost:8080/ProyectoFinal20162017-web/webservice/CategoriaService/Categorias/add2", nuevaCategoria);
         System.out.println("La categoria insertada es: " + p2.toString());
         System.out.println("----------------------------\n");
         

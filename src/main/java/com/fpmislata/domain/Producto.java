@@ -5,13 +5,14 @@
  */
 package com.fpmislata.domain;
 
-import com.google.gson.annotations.Expose;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -19,31 +20,40 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ *
+ * @author alumno
+ */
 @Entity
-@Table(name="categorias")
+@Table(name="productos")
 @NamedQueries({
-@NamedQuery(name="categoria.findAll", query = "SELECT c FROM Categoria c ORDER BY c.id")})
+@NamedQuery(name="producto.findAll", query = "SELECT p FROM Producto p ORDER BY p.id")})
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Categoria implements Serializable{
-
-    private static final long serialVersionUID = 1L;
+public class Producto implements Serializable{
     
     @Id
-    @Column(name="id_categoria")
+    @Column(name="id_producto")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Expose
     private int id;
     
     @Column(nullable=false, length=50)
-    @Expose
     private String nombre;
+    
+    @Column(nullable=false, length=11)
+    private Float precio;
+    
+    @ManyToOne
+    @JoinColumn(name = "categoria")
+    private Categoria categoria;
 
-    public Categoria() {
+    public Producto() {
     }
 
-    public Categoria(String nombre) {
+    public Producto(String nombre, Float precio, Categoria categoria) {
         this.nombre = nombre;
+        this.precio = precio;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -62,37 +72,21 @@ public class Categoria implements Serializable{
         this.nombre = nombre;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 71 * hash + this.id;
-        return hash;
+    public Float getPrecio() {
+        return precio;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Categoria other = (Categoria) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        return true;
+    public void setPrecio(Float precio) {
+        this.precio = precio;
     }
 
-    @Override
-    public String toString() {
-        return "Categoria{" + "id=" + id + ", nombre=" + nombre + '}';
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
     
     
 }
